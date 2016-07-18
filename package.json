@@ -1,0 +1,25 @@
+{
+  "name": "deadting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies":
+  {
+  	
+    "body-parser": "*",
+    "express": "*",
+    "jwt-simple": "*",
+    "mongoose": "*",
+    "morgan": "*",
+    "passport": "*",
+    "passport-jwt": "*",
+    "stripe": "*",
+    "request": "*",
+    "util":"*",
+    "prompt":"*",
+    "mailgun-js":"*",
+    "socket.io":"*"
+  },
+  "author": "rcanton",
+  "license": "ISC"
+}

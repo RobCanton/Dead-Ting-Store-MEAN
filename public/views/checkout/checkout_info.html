@@ -1,0 +1,202 @@
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+
+    <ul class="nav navbar-nav">
+      <li><a ng-href="#/cart">Cart</a></li>
+      &#8250;
+      <li class="active"><a>Information</a></li>
+      &#8250;
+      <li><a style="text-decoration : none; color : #999">Shipping Method</a></li>
+      &#8250;
+      <li><a style="text-decoration : none; color : #999">Payment</a></li>
+      &#8250;
+      <li><a style="text-decoration : none; color : #999">Review</a></li>
+    </ul>
+  </div>
+  <!-- /.container-fluid -->
+</nav>
+<!-- Page Features -->
+
+<spinner img-src="img/boxspinner.gif" show="!ready"></spinner>
+<div class="row" ng-show="ready">
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-4 column-left">
+    <h4>
+      Customer Information
+    </h4>
+    <form name="form" novalidate>
+      <fieldset class="form-group">
+        <div ng-show="auth">
+          <h5>
+            {{ info.customer.firstname }} {{ info.customer.lastname}}
+          </h5>
+          <h5>
+          {{ info.customer.email }}
+        </h5>
+          <button class='form-control btn btn-default btn-sm' ng-click="logout()" >Log out</button>
+        </div>
+        <div ng-hide="auth">
+          <fieldset class="form-group">
+            <input type="email" class="form-control" id="email" placeholder="Email Address" ng-model="info.customer.email">
+          </fieldset>
+          <fieldset class="form-group">
+            <input type="text" class="form-control" id="firstname" required placeholder="First Name" ng-model="info.customer.firstname">
+            <input type="text" class="form-control" id="lastname" required placeholder="Last Name" ng-model="info.customer.lastname">
+          </fieldset>
+          Already have an account with us? <a ng-href="#/checkout">Log in</a>
+        </div>
+
+      </fieldset>
+      <h4>
+        Shipping Address
+      </h4>
+
+      <fieldset class="form-group">
+        <input type="text" class="form-control" id="address" required placeholder="Address" ng-model="info.shipping.address">
+        <input type="text" class="form-control" id="addres_apt" placeholder="Apt, suite, etc. (Optional)" ng-model="info.shipping.apt">
+      </fieldset>
+      <fieldset class="form-group">
+        <input type="text" class="form-control" id="city" required placeholder="City" ng-model="info.shipping.city">
+      </fieldset>
+
+      <fieldset class="form-group">
+        <select class="form-control" id="country">
+          <option disabled selected value>Canada</option>
+        </select>
+      </fieldset>
+      <fieldset class="form-group">
+        <select class="form-control" required id="region" ng-model="info.shipping.region">
+          <option value="AB">Alberta</option>
+          <option value="BC">British Columbia</option>
+          <option value="MB">Manitoba</option>
+          <option value="NB">New Brunswick</option>
+          <option value="NL">Newfoundland</option>
+          <option value="NT">Northwest Territories</option>
+          <option value="NS">Nova Scotia</option>
+          <option value="NU">Nunavut</option>
+          <option value="ON">Ontario</option>
+          <option value="PE">Prince Edward Island</option>
+          <option value="QC">Quebec</option>
+          <option value="SK">Saskatchewan</option>
+          <option value="YT">Yukon</option>
+        </select>
+      </fieldset>
+      <fieldset class="form-group">
+        <input type="text" class="form-control" id="postal" required placeholder="Postal Code" ng-model="info.shipping.postal">
+      </fieldset>
+      <fieldset class="form-group">
+        <input type="text" class="form-control" id="phone" placeholder="Phone (Optional)" ng-model="info.shipping.phone">
+      </fieldset>
+      <div class="alert alert-danger" ng-show="err != null" required>
+        <strong>Oops!</strong> {{ err.msg }}
+      </div>
+      <div class='form-row'>
+          <button class='form-control btn btn-default submit-button' ng-disabled="form.$invalid" ng-click="continue()" type='submit'>Shipping &raquo;</button>
+      </div>
+    </form>
+    <br/>
+    <div class="row text-center">
+      <a href="#/cart">Return to cart</a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <table class="table">
+      <tbody>
+        <tr ng-repeat="item in user.cart">
+          <td class="col-sm-1 col-md-1 vert-align">
+            <img ng-src="/img/products/{{ item.sku }}.png" style="width: 75px; height: 75px;">
+          </td>
+          <td class="col-sm-4 col-md-3 vert-align">
+            <h5 class="media-heading">{{ item._product.name}}</h5>
+            <span>{{ utils.getSizeStringFromCode( item.size ) }}</span> <br/>
+          </td>
+          <td class="col-sm-4 col-md-3 vert-align">
+            <h5>{{ item.quantity}} &#215; {{ item._product.price }} &#61; <strong>${{ item._product.price * item.quantity }}</strong></h5></td>
+          </td>
+        </tr>
+        <tr class="row-top">
+          <td>
+            <h4>
+            Subtotal
+            </h4></td>
+          <td></td>
+          <td>
+            <h4 ng-show="totals.subtotal == (null || 0)">
+              -
+            </h4>
+            <h4 ng-hide="totals.subtotal == (null || 0)">
+              ${{ totals.subtotal }}
+            </h4>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4>
+            Taxes
+            </h4></td>
+          <td></td>
+          <td>
+            <h4 ng-show="totals.taxes == (null || 0)">
+              -
+            </h4>
+            <h4 ng-hide="totals.taxes == (null || 0)">
+              ${{ totals.taxes }}
+            </h4>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4>
+            Shipping
+            </h4></td>
+          <td></td>
+          <td>
+            <h4 ng-show="totals.shipping == (null || 0)">
+              -
+            </h4>
+            <h4 ng-hide="totals.shipping == (null || 0)">
+              ${{ totals.shipping }}
+            </h4>
+          </td>
+        </tr>
+        <tr class="row-top">
+          <td>
+            <h4>
+            Coupon
+            </h4></td>
+          <td>
+            <input ng-show="info.coupon == null" type="text" class="form-control" name="coupon" placeholder="" ng-model="coupon">
+          </td>
+
+          <td>
+            <button class="btn btn-default" type="button" ng-show="info.coupon == null" ng-click="applyCoupon(coupon)">Apply</button>
+            <h4 ng-hide="info.coupon == null">
+              {{ info.coupon.description }}
+            </h4>
+          </td>
+        </tr>
+        <tr style="background-color:black; color:white;">
+          <td>
+            <h4>
+            <strong>Total</strong>
+            </h4></td>
+          <td></td>
+          <td>
+            <h4 ng-show="totals.total == (null || 0)">
+              <strong>-</strong>
+            </h4>
+            <h4 ng-hide="totals.total == (null || 0)">
+              <strong>
+                ${{ totals.total }}
+              </strong>
+            </h4>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-2">
+  </div>
+  <!-- /.row -->
+  <br/>

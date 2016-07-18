@@ -1,0 +1,8 @@
+node_modules/
+ssl/
+app/config/
+public/js/lib/
+public/img/
+public/icons/
+public/fonts/
+public/audio/

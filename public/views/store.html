@@ -1,0 +1,26 @@
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#/">Shop</a></li>
+      <li><a href="#/cart">Cart ({{ user.cartInfo.numItems }} / ${{ user.cartInfo.subtotal }})</a></li>
+      <li><a href="#/account">Account</a></li>
+    </ul>
+  </div>
+  <!-- /.container-fluid -->
+</nav>
+<spinner img-src="img/boxspinner.gif" show="!ready"></spinner>
+<!-- Page Features -->
+<div class="row text-center" ng-show="ready">
+
+  <div ng-repeat="product in products" class="col-md-3 col-sm-6 hero-feature">
+    <div class="hovereffect">
+      <a href="#/item/{{product.sku}}"><img class="img-responsive" ng-src="img/products/{{product.sku}}.png" alt=""></a>
+    </div>
+    <h5>
+      {{ product.name }}
+    </h5>
+    <h4>${{ product.price }}</h4>
+
+  </div>
+</div>
+<!-- /.row -->

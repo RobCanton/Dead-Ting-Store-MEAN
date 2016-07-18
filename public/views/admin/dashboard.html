@@ -1,0 +1,87 @@
+<div class="row">
+  <h2>
+    Admin Dashboard
+  </h2>
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <form>
+      <h2>Add Product</h2>
+      <div class="form-group row">
+        <label for="sku" class="col-sm-2 form-control-label">SKU</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="sku" ng-model="newProduct.sku">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="name" class="col-sm-2 form-control-label">Name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="name" ng-model="newProduct.name">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="description" class="col-sm-2 form-control-label">Description</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" id="description" rows="3" ng-model="newProduct.desc"></textarea>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="price" class="col-sm-2 form-control-label">Price</label>
+        <div class="col-sm-4">
+          <div class="input-group">
+            <div class="input-group-addon">$</div>
+            <input type="text" class="form-control" id="price" placeholder="Amount" ng-model="newProduct.price">
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="price" class="col-sm-2 form-control-label">Sizes</label>
+        <div class="col-sm-10">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>OS</th>
+                <th>XS</th>
+                <th>SM</th>
+                <th>MD</th>
+                <th>LG</th>
+                <th>XL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-sm-2">
+                  <input type="number" min="-1" class="form-control" ng-model="newProduct.sizes.os">
+                </td>
+                <td class="col-sm-2">
+                  <input type="number" min="-1" class="form-control" ng-model="newProduct.sizes.xs">
+                </td>
+                <td class="col-sm-2">
+                  <input type="number" min="-1" class="form-control" ng-model="newProduct.sizes.sm">
+                </td>
+                <td class="col-sm-2">
+                  <input type="number" min="-1" class="form-control" ng-model="newProduct.sizes.md">
+                </td>
+                <td class="col-sm-2">
+                  <input type="number" min="-1" class="form-control" ng-model="newProduct.sizes.lg">
+                </td>
+                <td class="col-sm-2">
+                  <input type="number" min="-1" class="form-control" ng-model="newProduct.sizes.xl">
+                </td>
+              </tr>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-secondary" ng-click="addProduct()">Add</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="col-md-3"></div>
+
+</div>

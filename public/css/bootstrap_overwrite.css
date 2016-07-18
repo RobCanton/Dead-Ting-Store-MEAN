@@ -1,0 +1,97 @@
+:root{
+    --main-accent-color: black;
+}
+
+* {
+  border-radius: 0 !important;
+  -webkit-appearance: none;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.table tbody>tr>td.vert-align{
+    vertical-align: middle;
+}
+
+.btn:focus,.btn:active, .input:focus, .input:active {
+   outline: none !important;
+}
+
+a {
+  color: var(--main-accent-color);
+}
+
+a:hover {
+  color: var(--main-accent-color);
+}
+
+textarea:hover, 
+input:hover, 
+textarea:active, 
+input:active, 
+textarea:focus, 
+input:focus,
+button:focus,
+button:active,
+button:hover
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+  
+}
+
+ .btn {
+  border-color: #000;
+  border-width: 2px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+  background-color: white;
+  border-color: black;
+  color:black;
+  outline: none;
+  box-shadow: none;
+}
+
+.btn:hover {
+  color: white;
+  background-color: black;
+  border-color: black;
+}
+
+.btn-danger {
+  border:none;
+  background-color: rgba(0,0,0,0);
+  color:darkgray;
+}
+
+.btn-danger:hover {
+  background-color: rgba(0,0,0,0);
+  color: black;
+} 
+
+
+.btn-secondary {
+  border:none;
+  background-color: rgba(0,0,0,0);
+  color:darkgray;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(0,0,0,0);
+  color: black;
+}
+
+.table tbody tr td, .table tbody tr th, .table thead tr th {
+    border: none;
+}
+

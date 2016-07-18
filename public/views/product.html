@@ -1,0 +1,38 @@
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#/">Shop</a></li>
+      <li><a href="#/cart">Cart ({{ user.cartInfo.numItems }} / ${{ user.cartInfo.subtotal }})</a></li>
+      <li><a href="#/account">Account</a></li>
+    </ul>
+  </div>
+  <!-- /.container-fluid -->
+</nav>
+<spinner img-src="img/boxspinner.gif" show="!ready"></spinner>
+<!-- Page Features -->
+<div class="row text-center" ng-show="ready">
+  <div class="col-md-6">
+    <img class="img-responsive" ng-src="img/products/{{ product.sku }}.png" alt="">
+  </div>
+  <div class="col-md-4">
+    <h2>{{ product.name }}</h2>
+    <h3>{{ product.description }}</h3>
+    <br/><br/>
+    <div class="row" ng-hide="product.sizes.length <= 1">
+        <div class="input-group">
+          <span class="input-group-addon">Size</span>
+          <select class="form-control" required="required" ng-options="size as size.name for size in product.sizes track by size.code" ng-model="selectedSize">
+            <option>{{ size.name }}</option>
+          </select>
+          
+        </div>
+    </div>
+    <br/><br/>
+    <div class="row">
+        <button type="button" class="btn btn-default" ng-click="addItem()" ng-show="selectedSize.inStock">ADD TO CART</button>
+        <button type="button" class="btn btn-default" ng-disabled="true" ng-hide="selectedSize.inStock">SOLD OUT</button>
+    </div>
+  </div>
+</div>
+<!-- /.row -->

@@ -1,0 +1,173 @@
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+
+    <ul class="nav navbar-nav">
+      <li><a ng-href="#/cart">Cart</a></li>
+      &#8250;
+      <li><a ng-href="#/checkout/info">Information</a></li>
+      &#8250;
+      <li><a ng-href="#/checkout/shipping">Shipping Method</a></li>
+      &#8250;
+      <li class="active"><a>Payment</a></li>
+      &#8250;
+      <li><a style="text-decoration : none; color : #999">Review</a></li>
+    </ul>
+  </div>
+  <!-- /.container-fluid -->
+</nav>
+<!-- Page Features -->
+
+<spinner img-src="img/boxspinner.gif" show="!ready"></spinner>
+<div class="row" ng-show="ready">
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-4">
+    <h4>
+      Payment Method 
+    </h4>
+    <form stripe-form="stripeCallback" name="checkoutForm">
+      <div class='form-row'>
+        <div class='col-xs-12 form-group'>
+          <label class='control-label'>Name on Card</label>
+          <input class='form-control' size='4' type='text' name="name" ng-model="name" required>
+        </div>
+      </div>
+      <div class='form-row'>
+        <div class='col-xs-12 form-group'>
+          <label class='control-label'>Card Number</label>
+          <input autocomplete='off' class='form-control card-number' size='20' type='text' ng-model="number" name="card" payments-format="card" payments-validate="card" required>
+        </div>
+      </div>
+      <div class='form-row'>
+        <div class='col-xs-6 form-group'>
+          <label class='control-label'>Expiration</label>
+          <input class='form-control' placeholder='MM/YY' size='2' type='text' ng-model="expiry" name="expiry" payments-format="expiry" payments-validate="expiry" required>
+        </div>
+        <div class='col-xs-6 form-group'>
+          <label class='control-label'>CVC</label>
+          <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' size='4' type='text' ng-model="cvc" name="cvc" payments-format="cvc" payments-validate="cvc" required>
+        </div>
+      </div>
+      <div class='form-row'>
+        <div class='col-md-12 form-group'>
+          <div class="alert alert-danger" ng-show="err != null">
+            <strong>Oops!</strong> {{ err }}
+          </div>
+        </div>
+      </div>
+
+      <div class='form-row'>
+        <div class='col-md-12 form-group'>
+          <button class='form-control btn btn-default submit-button' type='submit' ng-disabled="checkoutForm.$invalid">Review Order&raquo;</button>
+        </div>
+      </div>
+
+      <div class='form-row'>
+        <a href="https://stripe.com"><img src="img/outline.png"></a>
+      </div>
+    </form>
+    <br/>
+    <div class="row text-center">
+      <a href="#/checkout/shipping">Return to shipping</a>
+    </div>
+  </div>
+  <div class="col-md-4 column-right">
+    <table class="table">
+      <tbody>
+        <tr ng-repeat="item in user.cart">
+          <td class="col-sm-1 col-md-1 vert-align">
+            <img ng-src="/img/products/{{ item.sku }}.png" style="width: 75px; height: 75px;">
+          </td>
+          <td class="col-sm-4 col-md-3 vert-align">
+            <h5 class="media-heading">{{ item._product.name}}</h5>
+            <span>{{ utils.getSizeStringFromCode( item.size ) }}</span> <br/>
+          </td>
+          <td class="col-sm-4 col-md-3 vert-align">
+            <h5>{{ item.quantity}} &#215; {{ item._product.price }} &#61; <strong>${{ item._product.price * item.quantity }}</strong></h5></td>
+          </td>
+        </tr>
+        <tr class="row-top">
+          <td>
+            <h4>
+            Subtotal
+            </h4></td>
+          <td></td>
+          <td>
+            <h4 ng-show="totals.subtotal == (null || 0)">
+              -
+            </h4>
+            <h4 ng-hide="totals.subtotal == (null || 0)">
+              ${{ totals.subtotal }}
+            </h4>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4>
+            Taxes
+            </h4></td>
+          <td></td>
+          <td>
+            <h4 ng-show="totals.taxes == (null || 0)">
+              -
+            </h4>
+            <h4 ng-hide="totals.taxes == (null || 0)">
+              ${{ totals.taxes }}
+            </h4>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4>
+            Shipping
+            </h4></td>
+          <td></td>
+          <td>
+            <h4 ng-show="totals.shipping == (null || 0)">
+              -
+            </h4>
+            <h4 ng-hide="totals.shipping == (null || 0)">
+              ${{ totals.shipping }}
+            </h4>
+          </td>
+        </tr>
+        <tr class="row-top">
+          <td>
+            <h4>
+            Coupon
+            </h4></td>
+          <td>
+            <input ng-show="info.coupon == null" type="text" class="form-control" name="coupon" placeholder="" ng-model="coupon">
+          </td>
+          
+          <td>
+            <button class="btn btn-default" type="button" ng-show="info.coupon == null" ng-click="applyCoupon(coupon)">Apply</button>
+            <h4 ng-hide="info.coupon == null">
+              {{ info.coupon.description }}
+            </h4>
+          </td>
+        </tr>
+        <tr style="background-color:black; color:white;">
+          <td>
+            <h4>
+            <strong>Total</strong>
+            </h4></td>
+          <td></td>
+          <td>
+            <h4 ng-show="totals.total == (null || 0)">
+              <strong>-</strong>
+            </h4>
+            <h4 ng-hide="totals.total == (null || 0)">
+              <strong>
+                ${{ totals.total }}
+              </strong>
+            </h4>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-2">
+  </div>
+  <!-- /.row -->
+  <br/>
